@@ -63,6 +63,22 @@ class Oauth2Controller < ApplicationController
     end
 
     def connect
+
+        # TODO: Ensure user logged in
+
+
+        # Allow certain parameters
+        params.permit(:fwd)
+        params.permit(:client_id)
+
+
+
+        # TODO: Save client and scope to user
+
+
+        # Forward
+        redirect_to params['fwd']
+
     end
 
     def connectform
