@@ -60,6 +60,36 @@ class Oauth2Controller < ApplicationController
     end
 
     def access_token
+        params.permit(:state)
+        params.permit(:scope)
+        params.permit(:response_type)
+        params.permit(:client_id)
+        params.permit(:redirect_uri)
+        params.permit(:grant_type)
+        params.permit(:refresh_token);
+
+        state = params[:state]
+        scope = params[:scope]
+        response_type = params[:response_type]
+        client_id = params[:client_id]
+        redirect_uri = params[:redirect_uri]
+        grant_type = params[:grant_type]
+        refresh_token = params[:refresh_token]
+
+        case grant_type
+        when 'refresh_token'
+
+
+
+
+        when 'authorization_code'
+
+
+
+
+        else
+            raise 'Unrecognised grant type'
+        end
     end
 
     def connect
