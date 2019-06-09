@@ -64,4 +64,20 @@ class Oauth2Controller < ApplicationController
 
     def connect
     end
+
+    def connectform
+        params.permit(:scope)
+        params.permit(:fwd)
+        params.permit(:client_id)
+
+        
+        @scope = params[:scope]
+        @fwd = params[:fwd]
+        @client_id = params[:client_id]
+
+        
+
+        @client = Oauthapp.where(pubkey: params[:client_id]).first
+       
+    end
 end

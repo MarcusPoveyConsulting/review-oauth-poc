@@ -1,0 +1,11 @@
+<h2>Authorise connection to <%= @client.title %> </h2>
+<p>Application has asked to connect to your account, do you want to allow it?</p>
+
+<%= form_with local: true do |form| %>
+    <%= form.hidden_field :client_id, :value => @client_id %>
+    <%= form.hidden_field :scope, :value => @scope %>
+    <%= form.hidden_field :fwd, :value => @fwd %>
+    <p>
+    <%= form.submit :value => 'Authorise' %>
+    </p>
+<% end %>
