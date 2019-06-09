@@ -1,0 +1,15 @@
+<h1>OAuth Application</h1>
+<p>
+Create a new OAuth App. 
+This is the basic of an OAuth handler, containing a label and set of generated keys.
+</p>
+<hr>
+<%= form_with scope: :oauthapp, url: oauthapp_index_path, local: true do |form| %>
+    <p>
+        <%= form.label :title %><br>
+        <%= form.text_field :title, :required => true %>
+    </p>
+    <p>
+    <%= form.submit %>
+    </p>
+<% end %>
