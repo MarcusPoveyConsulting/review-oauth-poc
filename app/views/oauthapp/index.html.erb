@@ -1,0 +1,19 @@
+<h1>Your Apps</h1>
+
+<table>
+    <tr>
+        <th>App Label</th>
+        <th>Public Key</th>
+        <th>Secret Key</th>
+        <th></th>
+    </tr>
+
+    <% @apps.each do |app| %>
+        <tr>
+            <td><%= app.title %></td>
+            <td><%= app.pubkey %></td>
+            <td><%= app.secret %></td>
+            <td><%= link_to 'Show', oauthapp_path(app) %></td>
+        </tr>
+    <% end %>
+</table>

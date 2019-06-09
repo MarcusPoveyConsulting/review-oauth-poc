@@ -5,8 +5,11 @@ class OauthappController < ApplicationController
     end
 
     def create
+
+        userid = 1 # Userid: TODO Get this from session
+
         # Generate key
-        params[:oauthapp][:userid] = 1 # Userid: TODO Get this from session
+        params[:oauthapp][:userid] = userid 
         params[:oauthapp][:pubkey] = Digest::SHA1.hexdigest rand().to_s
         params[:oauthapp][:secret] = Digest::SHA1.hexdigest rand().to_s
         
@@ -24,8 +27,15 @@ class OauthappController < ApplicationController
         @oauthapp = Oauthapp.find(params[:id])
     end
 
+    def index
+
+        userid = 1 # TODO : Fetch id from session
+
+        @apps = Oauthapp.where(userid: userid)
+    end
+
     private 
         def oauthapp_params
-            params.require(:oauthapp).permit(:title, :pubkey, :secret)
+            params.require(:oauthapp).permit(:userid, :title, :pubkey, :secret)
         end
 end
