@@ -1,0 +1,2 @@
+class Oauthcode < ApplicationRecord
+end

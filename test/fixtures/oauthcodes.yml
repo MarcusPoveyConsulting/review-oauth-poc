@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  key: MyString
+  code: MyString
+  scope: MyString
+  state: MyString
+  redirect_uri: MyString
+  expires: 2019-06-09 17:10:20
+
+two:
+  key: MyString
+  code: MyString
+  scope: MyString
+  state: MyString
+  redirect_uri: MyString
+  expires: 2019-06-09 17:10:20

@@ -10,13 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_09_125422) do
+ActiveRecord::Schema.define(version: 2019_06_09_161616) do
 
   create_table "oauthapps", force: :cascade do |t|
     t.integer "userid"
     t.string "title"
     t.string "pubkey"
     t.string "secret"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "oauthcodes", force: :cascade do |t|
+    t.string "key"
+    t.string "code"
+    t.string "scope"
+    t.string "state"
+    t.string "redirect_uri"
+    t.datetime "expires"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "oauthtokens", force: :cascade do |t|
+    t.string "key"
+    t.string "access_token"
+    t.string "refresh_token"
+    t.string "scope"
+    t.string "state"
+    t.string "token_type"
+    t.datetime "expires"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
