@@ -4,5 +4,10 @@ Rails.application.routes.draw do
 
   resources :oauthapp
 
+  get 'oauth2/authorise'
+  get 'oauth2/connect' => 'oauth2#connectform'
+  post 'oauth2/connect' 
+  get 'oauth2/token'
+
   root 'welcome#index'
 end
