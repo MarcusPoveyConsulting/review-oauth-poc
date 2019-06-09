@@ -35,13 +35,14 @@ class Oauth2Controller < ApplicationController
 
 
 
-            
+
         # See if we've seen this code before, error if so
-            # TODO
+        if Oauthcode.where(code: code).exists?
+            raise 'Code has already been seen'
+        end
 
-
-
-
+        # Save
+        @Oauthcode.save
 
         # Forward or echo
         if redirect_uri.nil?
