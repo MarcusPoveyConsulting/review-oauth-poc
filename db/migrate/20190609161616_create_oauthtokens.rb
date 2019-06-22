@@ -7,7 +7,7 @@ class CreateOauthtokens < ActiveRecord::Migration[5.2]
       t.string :scope
       t.string :state
       t.string :token_type
-      t.string :user_id
+      t.integer :user_id
       t.timestamp :expires
 
       t.timestamps

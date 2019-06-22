@@ -5,6 +5,7 @@ class CreateOauthcodes < ActiveRecord::Migration[5.2]
       t.string :code
       t.string :scope
       t.string :state
+      t.integer :user_id
       t.string :redirect_uri
       t.timestamp :expires
 

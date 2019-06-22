@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   post 'oauth2/connect' 
   get 'oauth2/token'
 
+  get 'demoapi/user'
+
   root 'welcome#index'
 end

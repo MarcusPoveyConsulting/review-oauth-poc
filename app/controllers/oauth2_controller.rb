@@ -21,17 +21,21 @@ class Oauth2Controller < ApplicationController
         expires = Time.now + (60 * 10)
         code = Digest::SHA1.hexdigest rand().to_s
 
-        @Oauthcode = Oauthcode.new({
-            :key => client_id,
-            :code => code,
-            :scope => scope,
-            :redirect_uri => redirect_uri,
-            :expires => expires
-        })
 
 
         # If not logged in, then do a login
             #TODO
+            user_id = 1
+
+
+        @Oauthcode = Oauthcode.new({
+            :key => client_id,
+            :code => code,
+            :scope => scope,
+            :user_id => user_id,
+            :redirect_uri => redirect_uri,
+            :expires => expires
+        })
 
 
 
@@ -95,10 +99,9 @@ class Oauth2Controller < ApplicationController
                 :scope => scope,
                 :state => state
                 :token_type => 'grant'
-                :user_id => '',
+                :user_id => token.user_id,
                 :expires =>  Time.now + 2419200
             })
-            # TODO Bind USER
 
             newtoken.save
 
@@ -127,7 +130,7 @@ class Oauth2Controller < ApplicationController
                 :scope => scope,
                 :state => state,
                 :token_type => 'grant',
-                :user_id => '',
+                :user_id => code.user_id,
                 :expires =>  Time.now + 2419200
             })
             # TODO Bind USER
@@ -179,3 +182,4 @@ class Oauth2Controller < ApplicationController
        
     end
 end
+# TODO do authentication - get token, check it's valid (not expired, invalid key), extract owner

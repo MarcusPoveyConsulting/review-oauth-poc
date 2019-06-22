@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 2019_06_09_161616) do
 
   create_table "oauthapps", force: :cascade do |t|
-    t.integer "userid"
+    t.integer "user_id"
     t.string "title"
     t.string "pubkey"
     t.string "secret"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_06_09_161616) do
     t.string "code"
     t.string "scope"
     t.string "state"
+    t.integer "user_id"
     t.string "redirect_uri"
     t.datetime "expires"
     t.datetime "created_at", null: false
@@ -39,7 +40,7 @@ ActiveRecord::Schema.define(version: 2019_06_09_161616) do
     t.string "scope"
     t.string "state"
     t.string "token_type"
-    t.string "user_id"
+    t.integer "user_id"
     t.datetime "expires"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
