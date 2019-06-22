@@ -79,13 +79,62 @@ class Oauth2Controller < ApplicationController
         case grant_type
         when 'refresh_token'
 
+            token = Oauthtoken.where(refresh_token: params[:refresh_token]).first
+            if !token?
+                raise "Token invalid"
+            end
 
+            if token.state != state
+                raise "Invalid state given"
+            end
 
+            newtoken = Oauthtoken.new({
+                :key => client_id,
+                :access_token => Digest::SHA1.hexdigest rand().to_s,
+                :refresh_token => Digest::SHA1.hexdigest rand().to_s,
+                :scope => scope,
+                :state => state
+                :token_type => 'grant'
+                :user_id => '',
+                :expires =>  Time.now + 2419200
+            })
+            # TODO Bind USER
+
+            newtoken.save
+
+            render json: newtoken.to_json
 
         when 'authorization_code'
 
+            code = Oauthcode.where(code: code, key: client_id)
 
+            if code.state?
+                if code.state != state
+                    raise "Invalid state given"
+                end
+            end
 
+            if code.redirect_uri?
+                if code.redirect_uri != redirect_uri
+                    raise "Sorry redirect url is not the same as the one given!"
+                end
+            end
+
+            newtoken = Oauthtoken.new({
+                :key => client_id,
+                :access_token => Digest::SHA1.hexdigest rand().to_s,
+                :refresh_token => Digest::SHA1.hexdigest rand().to_s,
+                :scope => scope,
+                :state => state,
+                :token_type => 'grant',
+                :user_id => '',
+                :expires =>  Time.now + 2419200
+            })
+            # TODO Bind USER
+
+            newtoken.save
+
+            render json: newtoken.to_json
 
         else
             raise 'Unrecognised grant type'
@@ -93,6 +142,7 @@ class Oauth2Controller < ApplicationController
     end
 
     def connect
+        # POST on connect
 
         # TODO: Ensure user logged in
 
@@ -112,6 +162,8 @@ class Oauth2Controller < ApplicationController
     end
 
     def connectform
+        # Get form
+
         params.permit(:scope)
         params.permit(:fwd)
         params.permit(:client_id)

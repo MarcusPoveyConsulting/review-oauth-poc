@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2019_06_09_161616) do
     t.string "scope"
     t.string "state"
     t.string "token_type"
+    t.string "user_id"
     t.datetime "expires"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
