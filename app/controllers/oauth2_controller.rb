@@ -56,7 +56,8 @@ class Oauth2Controller < ApplicationController
             # Now we need to forward
             query = {
                 :code => code,
-                :scope => scope
+                :scope => scope,
+                :state => state
             }
             redirect_to redirect_uri + "?" + query.to_query
         end
@@ -97,8 +98,8 @@ class Oauth2Controller < ApplicationController
                 :access_token => Digest::SHA1.hexdigest rand().to_s,
                 :refresh_token => Digest::SHA1.hexdigest rand().to_s,
                 :scope => scope,
-                :state => state
-                :token_type => 'grant'
+                :state => state,
+                :token_type => 'grant',
                 :user_id => token.user_id,
                 :expires =>  Time.now + 2419200
             })
