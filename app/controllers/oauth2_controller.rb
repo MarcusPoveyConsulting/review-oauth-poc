@@ -93,10 +93,13 @@ class Oauth2Controller < ApplicationController
                 raise "Invalid state given"
             end
 
+            access_token = Digest::SHA1.hexdigest rand().to_s
+            refresh_token = Digest::SHA1.hexdigest rand().to_s
+
             newtoken = Oauthtoken.new({
                 :key => client_id,
-                :access_token => Digest::SHA1.hexdigest rand().to_s,
-                :refresh_token => Digest::SHA1.hexdigest rand().to_s,
+                :access_token => access_token,
+                :refresh_token => refresh_token,
                 :scope => scope,
                 :state => state,
                 :token_type => 'grant',
@@ -124,10 +127,13 @@ class Oauth2Controller < ApplicationController
                 end
             end
 
+            access_token = Digest::SHA1.hexdigest rand().to_s
+            refresh_token = Digest::SHA1.hexdigest rand().to_s
+
             newtoken = Oauthtoken.new({
                 :key => client_id,
-                :access_token => Digest::SHA1.hexdigest rand().to_s,
-                :refresh_token => Digest::SHA1.hexdigest rand().to_s,
+                :access_token => access_token,
+                :refresh_token => refresh_token,
                 :scope => scope,
                 :state => state,
                 :token_type => 'grant',
