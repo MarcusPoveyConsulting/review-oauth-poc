@@ -89,10 +89,12 @@ class Oauth2Controller < ApplicationController
         case grant_type
         when 'refresh_token'
 
-            token = Oauthtoken.where(refresh_token: params[:refresh_token]).first
-            if !token?
+            tokens = Oauthtoken.where(refresh_token: params[:refresh_token]).first
+            if !tokens.exists?
                 raise "Token invalid"
             end
+
+            token = tokens.take
 
             if token.state != state
                 raise "Invalid state given"
@@ -118,16 +120,15 @@ class Oauth2Controller < ApplicationController
 
         when 'authorization_code'
 
-            code = Oauthcode.where(code: code, key: client_id)
-            puts YAML::dump(code)
-            if !code.exists? || code.state!= state
-                raise "Invalid state given"
-            end
+            codes = Oauthcode.where(code: code, key: client_id)
+            code = codes.take
+            
+            #if !codes.exists? || code.state != state
+            #    raise "Invalid state given "
+            #end
 
-            if code.redirect_uri.exists?
-                if code.redirect_uri != redirect_uri
-                    raise "Sorry redirect url is not the same as the one given!"
-                end
+            if !codes.exists? || code.redirect_uri != redirect_uri
+                raise "Sorry redirect url is not the same as the one given!"
             end
 
             access_token = Digest::SHA1.hexdigest rand().to_s

@@ -8,10 +8,12 @@ class DemoapiController < ApplicationController
 
 
         # Validate auth token
-        token = Oauthtoken.where(access_token: params[:access_token]).first
-        if !token?
+        tokens = Oauthtoken.where(access_token: params[:access_token]).first
+        if !tokens.exists?
             raise "Token invalid"
         end
+
+        token = tokens.take
 
         # Todo validate expiry
 
