@@ -5,6 +5,8 @@ require 'uri'
 require 'cgi'
 
 class Oauth2Controller < ApplicationController
+    
+    skip_before_action :verify_authenticity_token
 
     def authorise
         params.permit(:state)
@@ -32,6 +34,7 @@ class Oauth2Controller < ApplicationController
             :key => client_id,
             :code => code,
             :scope => scope,
+            :state => state,
             :user_id => user_id,
             :redirect_uri => redirect_uri,
             :expires => expires
@@ -41,7 +44,7 @@ class Oauth2Controller < ApplicationController
 
 
         # See if we've seen this code before, error if so
-        if Oauthcode.where(code: code).exists?
+        if Oauthcode.where(code: code, key: client_id).exists?
             raise 'Code has already been seen'
         end
 
@@ -64,7 +67,7 @@ class Oauth2Controller < ApplicationController
 
     end
 
-    def access_token
+    def token
         params.permit(:state)
         params.permit(:scope)
         params.permit(:response_type)
@@ -72,6 +75,7 @@ class Oauth2Controller < ApplicationController
         params.permit(:redirect_uri)
         params.permit(:grant_type)
         params.permit(:refresh_token);
+        params.permit(:code);
 
         state = params[:state]
         scope = params[:scope]
@@ -80,6 +84,7 @@ class Oauth2Controller < ApplicationController
         redirect_uri = params[:redirect_uri]
         grant_type = params[:grant_type]
         refresh_token = params[:refresh_token]
+        code = params[:code]
 
         case grant_type
         when 'refresh_token'
@@ -114,14 +119,12 @@ class Oauth2Controller < ApplicationController
         when 'authorization_code'
 
             code = Oauthcode.where(code: code, key: client_id)
-
-            if code.state?
-                if code.state != state
-                    raise "Invalid state given"
-                end
+            puts YAML::dump(code)
+            if !code.exists? || code.state!= state
+                raise "Invalid state given"
             end
 
-            if code.redirect_uri?
+            if code.redirect_uri.exists?
                 if code.redirect_uri != redirect_uri
                     raise "Sorry redirect url is not the same as the one given!"
                 end

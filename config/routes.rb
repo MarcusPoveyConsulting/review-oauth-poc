@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'oauth2/connect' => 'oauth2#connectform'
   post 'oauth2/connect' 
   get 'oauth2/token'
+  post 'oauth2/token'
 
   get 'demoapi/user'
 
