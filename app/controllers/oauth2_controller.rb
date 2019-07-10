@@ -89,7 +89,7 @@ class Oauth2Controller < ApplicationController
         case grant_type
         when 'refresh_token'
 
-            tokens = Oauthtoken.where(refresh_token: params[:refresh_token]).first
+            tokens = Oauthtoken.where(refresh_token: params[:refresh_token])
             if !tokens.exists?
                 raise "Token invalid"
             end
