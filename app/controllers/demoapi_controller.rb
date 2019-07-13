@@ -31,7 +31,7 @@ class DemoapiController < ApplicationController
 
         if user == 1
             userdetails = {
-                :user_id => 1,
+                :id => 1,
                 :username => 'demouser',
                 :name => 'Demo User'
             } 
